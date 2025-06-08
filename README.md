@@ -1,6 +1,6 @@
 # CCLLM 
 
-<img src="/home/chaichunyang/CCLLM/CCLLM.png">
+<img src="./CCLLM.png">
 
 
 ## Overview
