@@ -4,7 +4,7 @@ import torch
 
 from utils import *
 
-model_id = "./llama3"
+model_id = "./Llama3_models"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 # Loading Llama3 model
 model = AutoModelForCausalLM.from_pretrained(
