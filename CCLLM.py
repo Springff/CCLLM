@@ -4,7 +4,6 @@ import torch
 
 from utils import *
 
-
 model_id = "./llama3"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 # Loading Llama3 model
