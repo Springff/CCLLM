@@ -12,7 +12,6 @@ def load_pickle(filename):
 def save_to_csv(data, filename, lists):
     directory = os.path.dirname(filename)
 
-    # Create the directory if it does not exist
     if not os.path.exists(directory):
         os.makedirs(directory)
         

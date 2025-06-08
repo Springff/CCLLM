@@ -6,7 +6,6 @@ from utils import *
 
 model_id = "./Llama3_models"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
-# Loading Llama3 model
 model = AutoModelForCausalLM.from_pretrained(
     model_id,
     torch_dtype=torch.bfloat16,
@@ -14,7 +13,6 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 
 output_dir = "./CCLLM-Llama3"
-# Loading the LoRA module
 model = PeftModel.from_pretrained(model, output_dir)
 
 task = {'1-3','2-5'}
