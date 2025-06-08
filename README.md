@@ -51,7 +51,7 @@ Place the downloaded Llama3 model in the llama3_models directory (recommended), 
 
 ### Step 4: Run
 ```bash
-python /home/chaichunyang/CCLLM/llama3_0.py
+python ./CCLLM.py
 ```
 
 
