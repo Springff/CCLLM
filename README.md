@@ -60,10 +60,10 @@ python ./CCLLM.py
 ## Project Structure 
 ```
 CCLLM/
-├── llama3_0.py             # Main execution script
+├── CCLLM.py                # Main execution script
 ├── environment.txt         # Python dependency file
 ├── README.md               # This document
-├── llama3_models/           # (Optional) Directory for Llama3 models
-│   └──  (Llama3 model files)
+├── Llama3_models/          # Directory for Llama3 models
+├── CCLLM-Llama3/           # Directory for LoRA module
 └── ...
 ```
