@@ -4,7 +4,7 @@
 <img src="./CCLLM.png">
 
 
-## ⚙️ Overview
+## 🌟 Overview
 
 
 CCLLM is a graph-based LLM framework designed to identify conservative topological patterns of cell type combinations as CC motifs from cellular communities in SRT data. 
