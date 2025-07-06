@@ -87,7 +87,10 @@ def load_and_preprocess_data(task, path):
             ### Output Format ###
             There are ... subgraphs that match the given subgraph. They are:... 
             """.strip()
+<<<<<<< HEAD
 
+=======
+>>>>>>> d75b64cc413914e0cfdfcdb002f03a759f4c4b98
             source = prompt.format(
                 pat_id_list,
                 pat_node_labels,
