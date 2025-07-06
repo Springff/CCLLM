@@ -33,7 +33,7 @@ conda activate myenv
 
 Install dependencies:
 ```bash
-pip install -r environment.txt
+pip install -r requirements.txt
 ```
 
 
