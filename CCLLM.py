@@ -15,7 +15,7 @@ model = AutoModelForCausalLM.from_pretrained(
 output_dir = "./CCLLM-Llama3"
 model = PeftModel.from_pretrained(model, output_dir)
 
-task = ["1-3", "2-5"]
+task = ["task-1", "task-2"]
 path = "./Data/test_data.pkl"
 val_dataset = load_and_preprocess_data(task, path)
 
@@ -23,7 +23,6 @@ val_dataset = load_and_preprocess_data(task, path)
 # output2 is the result of predicting the number of CC motifs
 output1, output2 = generate(val_dataset, tokenizer, model)
 
-Column1 = ["id", "input", "output", "label", "subgraph"]
-save_to_csv(output1, "./output1.csv", Column1)
-Column2 = ["id", "input", "output", "label", "subgraph"]
-save_to_csv(output2, "./output2.csv", Column2)
+Column = ["id", "input", "output", "label", "subgraph"]
+save_to_csv(output1, "./output1.csv", Column)
+save_to_csv(output2, "./output2.csv", Column)

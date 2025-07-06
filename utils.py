@@ -61,7 +61,7 @@ def load_and_preprocess_data(task, path):
         gra_node_labels = dataset[i]["graph"].vs["label"]
         gra_edges = dataset[i]["graph"].get_edgelist()
 
-        if "1-3" in task:
+        if "task-1" in task:
             question = "True represents the presence of subgraphs in the large graph that match the given subgraph; False indicates that there is no such subgraph in a large graph. Please tell me True or False?"
             source = prompt.format(
                 pat_id_list,
@@ -74,14 +74,14 @@ def load_and_preprocess_data(task, path):
             )
             dataset_final.append(
                 {
-                    "task": "1-3",
+                    "task": "task-1",
                     "id": id,
                     "input": source,
                     "labels": label,
                     "subisomorphisms": subpat,
                 }
             )
-        if "2-5" in task:
+        if "task-2" in task:
             question = """
             Please think step by step. How many patterns exist on the graph?
             ### Output Format ###
@@ -98,7 +98,7 @@ def load_and_preprocess_data(task, path):
             )
             dataset_final.append(
                 {
-                    "task": "2-5",
+                    "task": "task-2",
                     "id": id,
                     "input": source,
                     "counts": counts,
@@ -141,7 +141,7 @@ def generate(val_dataset, tokenizer, model):
             response = outputs[0][input_ids.shape[-1] :]
             response_text = tokenizer.decode(response, skip_special_tokens=True)
 
-            if val_dataset[i]["task"] == "1-3":
+            if val_dataset[i]["task"] == "task-1":
                 output1.append(
                     {
                         "id": val_dataset[i]["id"],
@@ -152,7 +152,7 @@ def generate(val_dataset, tokenizer, model):
                     }
                 )
 
-            elif val_dataset[i]["task"] == "2-5":
+            elif val_dataset[i]["task"] == "task-2":
                 output2.append(
                     {
                         "id": val_dataset[i]["id"],
