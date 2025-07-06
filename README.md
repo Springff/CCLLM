@@ -1,10 +1,10 @@
-# CCLLM
+# 🎓 CCLLM: Cellular Community Large Language Model to identify motifs of cell organization in spatial transcriptomics
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Springff/CCLLM)
 
 <img src="./CCLLM.png">
 
 
-## Overview
+## ⚙️ Overview
 
 
 CCLLM is a graph-based LLM framework designed to identify conservative topological patterns of cell type combinations as CC motifs from cellular communities in SRT data. 
@@ -14,7 +14,7 @@ CCLLM constructs a cellular community by cell spatial coordinates, where nodes r
 
 
 
-## Quick Start
+## 🚀 Quick Start
 
 These instructions guide you on how to run CCLLM locally.
 
@@ -58,11 +58,11 @@ python ./CCLLM.py
 
 
 
-## Project Structure 
+## 📋 Project Structure 
 ```
 CCLLM/
 ├── CCLLM.py                # Main execution script
-├── environment.txt         # Python dependency file
+├── requirements.txt         # Python dependency file
 ├── README.md               # This document
 ├── Llama3_models/          # Directory for Llama3 models
 ├── CCLLM-Llama3/           # Directory for LoRA module
