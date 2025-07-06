@@ -42,7 +42,7 @@ def load_and_preprocess_data(task, path):
     </target graph>
     ### Task Description ###
     You task is to determine whether the provided query subgraph exists within the target graph. Please note that both the target graph and query subgraph are undirected, meaning edge directionality is irrelevant, that is, (a, b) is equivalent to (b, a). Please think step by step, carefully analyze the graph structures to identify all matching subgraphs. {}? 
-    """
+    """.strip()
 
     for i in tqdm(range(len(dataset))):
 
@@ -62,7 +62,7 @@ def load_and_preprocess_data(task, path):
         gra_edges = dataset[i]["graph"].get_edgelist()
 
         if "task-1" in task:
-            question = "True represents the presence of subgraphs in the large graph that match the given subgraph; False indicates that there is no such subgraph in a large graph. Please tell me True or False?"
+            question = """True represents the presence of subgraphs in the large graph that match the given subgraph; False indicates that there is no such subgraph in a large graph. Please tell me True or False?""".strip()
             source = prompt.format(
                 pat_id_list,
                 pat_node_labels,
@@ -86,7 +86,8 @@ def load_and_preprocess_data(task, path):
             Please think step by step. How many patterns exist on the graph?
             ### Output Format ###
             There are ... subgraphs that match the given subgraph. They are:... 
-            """
+            """.strip()
+            
             source = prompt.format(
                 pat_id_list,
                 pat_node_labels,
