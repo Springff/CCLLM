@@ -87,7 +87,7 @@ def load_and_preprocess_data(task, path):
             ### Output Format ###
             There are ... subgraphs that match the given subgraph. They are:... 
             """.strip()
-            
+
             source = prompt.format(
                 pat_id_list,
                 pat_node_labels,
@@ -117,7 +117,6 @@ def generate(val_dataset, tokenizer, model):
 
     with torch.no_grad():
         for i in tqdm(range(len(val_dataset))):
-            torch.cuda.empty_cache()
             messages = [
                 {"role": "user", "content": val_dataset[i]["input"]},
             ]
