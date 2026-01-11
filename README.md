@@ -1,6 +1,8 @@
 # 🎓 CCLLM: Cellular Community Large Language Model to identify motifs of cell organization in spatial transcriptomics
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Springff/CCLLM)
-
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Bioinformatics](https://img.shields.io/badge/Domain-Bioinformatics-purple)
 <img src="./CCLLM.png">
 
 
