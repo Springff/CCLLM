@@ -109,15 +109,132 @@ def load_and_preprocess_data(task, path):
     return dataset_final
 
 
-def generate(val_dataset, tokenizer, model):
+def validate_prompt_information(prompt_text):
+    """
+    Validate whether prompt contains necessary graph information for both query subgraph and target graph.
+
+    Args:
+        prompt_text: prompt text content
+
+    Returns:
+        tuple: (is_valid, missing_info)
+            - is_valid: bool, whether validation passed
+            - missing_info: list, list of missing information
+    """
+    missing_info = []
+
+    def extract_all_content(text, start_tag, end_tag):
+        """Extract all occurrences of content between start_tag and end_tag"""
+        contents = []
+        search_start = 0
+        while True:
+            start_idx = text.find(start_tag, search_start)
+            if start_idx == -1:
+                break
+            end_idx = text.find(end_tag, start_idx)
+            if end_idx == -1:
+                break
+            content = text[start_idx + len(start_tag):end_idx].strip()
+            if content:
+                contents.append(content)
+            search_start = end_idx + len(end_tag)
+        return contents
+
+    # Extract all label, edge, and index contents
+    labels = extract_all_content(prompt_text, '<label>', '</label>')
+    edges = extract_all_content(prompt_text, '<edge>', '</edge>')
+    indices = extract_all_content(prompt_text, '<index>', '</index>')
+
+    # Validate query subgraph (first occurrence)
+    if len(labels) < 1:
+        missing_info.append('Query subgraph node label information (<label> tag)')
+    elif not labels[0]:
+        missing_info.append('Query subgraph node label is empty')
+
+    if len(edges) < 1:
+        missing_info.append('Query subgraph edge list information (<edge> tag)')
+    elif not edges[0]:
+        missing_info.append('Query subgraph edge list is empty')
+
+    if len(indices) < 1:
+        missing_info.append('Query subgraph node index information (<index> tag)')
+    elif not indices[0]:
+        missing_info.append('Query subgraph node index is empty')
+
+    # Validate target graph (second occurrence)
+    if len(labels) < 2:
+        missing_info.append('Target graph node label information (<label> tag)')
+    elif not labels[1]:
+        missing_info.append('Target graph node label is empty')
+
+    if len(edges) < 2:
+        missing_info.append('Target graph edge list information (<edge> tag)')
+    elif not edges[1]:
+        missing_info.append('Target graph edge list is empty')
+
+    if len(indices) < 2:
+        missing_info.append('Target graph node index information (<index> tag)')
+    elif not indices[1]:
+        missing_info.append('Target graph node index is empty')
+
+    is_valid = len(missing_info) == 0
+    return is_valid, missing_info
+
+
+def prompt_confirmation(prompt_text, task_id, item_id, verbose=True):
+    """
+    Prompt user to confirm prompt information completeness.
+
+    Args:
+        prompt_text: prompt text
+        task_id: task ID
+        item_id: data item ID
+        verbose: bool, whether to print detailed information
+
+    Returns:
+        bool, whether user confirms to continue
+    """
+    is_valid, missing_info = validate_prompt_information(prompt_text)
+
+    if is_valid:
+        if verbose:
+            print(f"✓ [Task {task_id} - ID {item_id}] Information validation passed!")
+        return True
+    else:
+        print(f"\n⚠️  [Task {task_id} - ID {item_id}] Information validation failed!")
+        print("Missing information:")
+        for i, info in enumerate(missing_info, 1):
+            print(f"  {i}. {info}")
+        print()
+
+        if verbose:
+            response = input("Continue sending prompt to the model? (yes/no): ").strip().lower()
+            if response in ['yes', 'y']:
+                print("User chose to continue.\n")
+                return True
+            else:
+                print("Skipped this item. Please complete the information and try again.\n")
+                return False
+        return False
+
+
+def generate(val_dataset, tokenizer, model, validate=False):
     output1 = []
     output2 = []
     model.eval()
 
     with torch.no_grad():
         for i in tqdm(range(len(val_dataset))):
+            prompt_text = val_dataset[i]["input"]
+            task_id = val_dataset[i]["task"]
+            item_id = val_dataset[i]["id"]
+
+            # Validate prompt information if requested
+            if validate and not prompt_confirmation(prompt_text, task_id, item_id, verbose=True):
+                continue
+
             messages = [
-                {"role": "user", "content": val_dataset[i]["input"]},
+                {"role": "user", "content": prompt_text},
             ]
 
             input_ids = tokenizer.apply_chat_template(
