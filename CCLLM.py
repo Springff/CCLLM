@@ -21,7 +21,7 @@ val_dataset = load_and_preprocess_data(task, path)
 
 # output1 is the result of predicting whether CC motifs exists
 # output2 is the result of predicting the number of CC motifs
-output1, output2 = generate(val_dataset, tokenizer, model)
+output1, output2 = generate(val_dataset, tokenizer, model, validate=True)
 
 Column = ["id", "input", "output", "label", "subgraph"]
 save_to_csv(output1, "./output1.csv", Column)
